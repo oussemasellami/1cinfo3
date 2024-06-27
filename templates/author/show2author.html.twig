@@ -1,4 +1,6 @@
 <p>nbr authors: {{rrrr | length}} </p>
+
+{% if rrrr | length>0 and rrrr is defined %}
 <table border="3">
     <tr>
         <td>id</td>
@@ -7,14 +9,23 @@
         <td>email</td>
         <td>nb_books</td>
     </tr>
-
+{% set total=0 %}
     {% for i in rrrr  %}
     <tr>
         <td>{{i.id}}</td>
-        <td>{{i.picture}}</td>
+        <td><img src="{{asset(i.picture)}}" style="height: 100;width: 100;"></td>
         <td>{{i.username | upper}}</td>
         <td>{{i.email}}</td>
-        <td>{{i.nb_books}}</td>
+        <td>{{"nbrlive"~i.nb_books}}</td>
+<td><a href="{{path('app_showauthor',{'id':i.id})}}">redirect To</a></td>
+        {% set total = total + i.nb_books %}
     </tr>
     {% endfor %}
 </table>
+nbr total de livre: {{total}}
+{% else %}
+is empty
+{% endif %}
+
+<hr>
+{# <a href="{{path('app_showauthor')}}">redirect To</a> #}
