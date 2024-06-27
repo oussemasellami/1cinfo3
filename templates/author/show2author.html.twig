@@ -1,0 +1,20 @@
+<p>nbr authors: {{rrrr | length}} </p>
+<table border="3">
+    <tr>
+        <td>id</td>
+        <td>picture</td>
+        <td>username</td>
+        <td>email</td>
+        <td>nb_books</td>
+    </tr>
+
+    {% for i in rrrr  %}
+    <tr>
+        <td>{{i.id}}</td>
+        <td>{{i.picture}}</td>
+        <td>{{i.username | upper}}</td>
+        <td>{{i.email}}</td>
+        <td>{{i.nb_books}}</td>
+    </tr>
+    {% endfor %}
+</table>
