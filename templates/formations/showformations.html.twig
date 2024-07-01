@@ -1,0 +1,29 @@
+
+<table border="3">
+    <tr>
+        <td>ref</td>
+        <td>Titre</td>
+        <td>Description</td>
+        <td>date_debut</td>
+        <td>date_fin</td>
+        <td>nb_participants</td>
+    </tr>
+
+    {% for i in formations  %}
+    <tr>
+        <td>{{i.ref}}</td>
+        <td>{{i.Titre}}</td>
+        <td>{{i.Description | upper}}</td>
+        <td>{{i.date_debut}}</td>
+        <td>{{i.date_fin}}</td>
+        <td>{{i.nb_participants}}</td>
+        <td><a href="{{path('app_detailsformations',{'id':i.ref})}}">redirect To</a></td>
+
+      
+    </tr>
+    {% endfor %}
+</table>
+
+
+<hr>
+{# <a href="{{path('app_showauthor')}}">redirect To</a> #}
