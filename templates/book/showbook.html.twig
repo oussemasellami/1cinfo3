@@ -1,0 +1,25 @@
+<table border="3">
+
+    <tr>
+        <td>ref</td>
+        <td>title</td>
+        <td>category</td>
+        <td>author</td>
+        <td>pubdate</td>
+        <td>published</td>
+        
+    </tr>
+    {% for i in book %}
+    <tr>
+        <td>{{i.ref}}</td>
+        <td>{{i.title}}</td>
+        <td>{{i.category}}</td>
+        <td>{{i.author}}</td>
+        <td>{{i.pubdate ? i.pubdate|date('Y-m-d'): ''}}</td>
+        <td>{{i.published ? 'Yes' : 'No'}}</td>
+        <td><a href="{{path('app_deletebook',{'id':i.ref})}}">Delete</a></td>
+        <td><a href="{{path('app_updatebook',{'id':i.ref})}}">update</a></td>
+        
+    </tr>
+    {% endfor %}
+</table>
