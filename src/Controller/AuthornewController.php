@@ -9,6 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\AuthorRepository;
 use App\Entity\Author;
 use App\Form\AuthorType;
+use App\Form\SearchType;
 use Doctrine\Persistence\ManagerRegistry;
 
 class AuthornewController extends AbstractController
@@ -22,12 +23,21 @@ class AuthornewController extends AbstractController
     }
 
     #[Route('/showauthornew', name: 'app_showauthornew')]
-    public function showauthornew(AuthorRepository $authorRepository): Response
+    public function showauthornew(AuthorRepository $authorRepository, Request $req): Response
     {
         $authors = $authorRepository->findAll();
+        $form = $this->createForm(SearchType::class);
+        $form->handleRequest($req);
+        $username = $form->get('username')->getData();
+        var_dump($username) . die();
 
-        return $this->render('authornew/showauthornew.html.twig', [
-            'authors' => $authors,
+        //$authors=$authorRepository->Orderby();
+        //$authors = $authorRepository->UserenameLike();
+        //$authors = $authorRepository->Orderbydql();
+        //$authors = $authorRepository->UserenameLikemiddl();
+
+        return $this->renderForm('authornew/showauthornew.html.twig', [
+            'authors' => $authors, 'f' => $form
         ]);
     }
 
@@ -68,7 +78,9 @@ class AuthornewController extends AbstractController
     {
         $name = 'hhhhhhhhhhhhhhhhhhhhhhh';
         //var_dump($id) . die();
-        $author = $authorRepository->find($id);
+        //$author = $authorRepository->find($id);
+        $author = $authorRepository->showauthorbook($id);
+        //var_dump($author) . die();
         return $this->render('authornew/detailsauthornew.html.twig', [
             'author' => $author, 'name' => $name
         ]);

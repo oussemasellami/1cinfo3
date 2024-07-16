@@ -21,28 +21,73 @@ class AuthorRepository extends ServiceEntityRepository
         parent::__construct($registry, Author::class);
     }
 
-//    /**
-//     * @return Author[] Returns an array of Author objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function Orderby(): array
+    {
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.nb_books', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+    public function Orderbydql(): array
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery('SELECT A FROM App\Entity\Author A ORDER BY A.username DESC');
+        return $query->getResult();
+    }
 
-//    public function findOneBySomeField($value): ?Author
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function UserenameLike(): array
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.username LIKE :username')
+            ->setParameter('username', 'A%')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function UserenameLikemiddl(): array
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.username LIKE :username')
+            ->andWhere('a.email LIKE :email')
+            ->setParameters(['username' => '%l%', 'email' => 'a%'])
+            ->getQuery()
+            ->getResult();
+    }
+
+    /*************************************************** */
+    public function showauthorbook($id): array
+    {
+        return $this->createQueryBuilder('a')
+            ->join('a.author', 'b')
+            ->addSelect('b')
+            ->where('b.author=:id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult();
+    }
+
+    //    /**
+    //     * @return Author[] Returns an array of Author objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('a')
+    //            ->andWhere('a.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('a.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
+
+    //    public function findOneBySomeField($value): ?Author
+    //    {
+    //        return $this->createQueryBuilder('a')
+    //            ->andWhere('a.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }
