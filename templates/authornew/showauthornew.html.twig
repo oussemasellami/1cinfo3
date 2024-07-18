@@ -1,7 +1,9 @@
 
 {{form_start(f)}}
-{{form_label(f,'username')}}
-{{form_widget(f)}}
+{{form_label(f.min,'min')}}
+{{form_widget(f.min)}}
+{{form_label(f.max,'max')}}
+{{form_widget(f.max)}}
 {{form_end(f)}}
 <br>
 <hr>
@@ -23,6 +25,7 @@
         <td><a href="{{path('app_detailsauthornew',{'id':i.id})}}">Details</a></td>
         <td><a href="{{path('app_updateauthornew',{'id':i.id})}}">update</a></td>
         <td><a href="{{path('app_deleteauthornew',{'id':i.id})}}">delete</a></td>
+        <td><a href="{{path('app_Addformauthornew')}}">delete</a></td>
 
      
     </tr>

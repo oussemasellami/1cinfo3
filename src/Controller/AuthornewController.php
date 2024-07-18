@@ -9,6 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\AuthorRepository;
 use App\Entity\Author;
 use App\Form\AuthorType;
+use App\Form\MinmaxType;
 use App\Form\SearchType;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -26,16 +27,30 @@ class AuthornewController extends AbstractController
     public function showauthornew(AuthorRepository $authorRepository, Request $req): Response
     {
         $authors = $authorRepository->findAll();
-        $form = $this->createForm(SearchType::class);
+        // $form = $this->createForm(SearchType::class);
+        /*********************************************** */
+        $form = $this->createForm(MinmaxType::class);
+        /************************************************* */
         $form->handleRequest($req);
-        $username = $form->get('username')->getData();
-        var_dump($username) . die();
-
-        //$authors=$authorRepository->Orderby();
-        //$authors = $authorRepository->UserenameLike();
-        //$authors = $authorRepository->Orderbydql();
-        //$authors = $authorRepository->UserenameLikemiddl();
-
+        /*************************search************************* */
+        // $username = $form->get('username')->getData();
+        /****************************************************** */
+        $min = $form->get('min')->getData();
+        $max = $form->get('max')->getData();
+        //var_dump($min,$max) . die();
+        if ($form->isSubmitted()) {
+            /*************************search**************************** */
+            // $author = $authorRepository->SearchAuthor($username);
+            /**************************************************************** */
+            $author = $authorRepository->minmaxbydql($min, $max);
+            //$authors=$authorRepository->Orderby();
+            //$authors = $authorRepository->UserenameLike();
+            //$authors = $authorRepository->Orderbydql();
+            //$authors = $authorRepository->UserenameLikemiddl();
+            return $this->renderForm('authornew/showauthornew.html.twig', [
+                'authors' => $author, 'f' => $form
+            ]);
+        }
         return $this->renderForm('authornew/showauthornew.html.twig', [
             'authors' => $authors, 'f' => $form
         ]);
@@ -49,7 +64,7 @@ class AuthornewController extends AbstractController
         $author = new Author();
         $author->setUsername("mohamed");
         $author->setEmail("mohamed@esprit.tn");
-        $author->setNbBooks(7);
+        $author->setNbBooks(7)+1;
         $em->persist($author);
         $em->flush();
 

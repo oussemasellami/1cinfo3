@@ -28,6 +28,25 @@ class AuthorRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+
+    public function SearchAuthor($username): array
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.username LIKE :username')
+            ->setParameter('username', $username)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function minmaxbydql($min, $max): array
+    {
+        $em = $this->getEntityManager();
+        return $em->createQuery('SELECT A FROM App\Entity\Author A where A.nb_books BETWEEN ?1 and :max')
+            ->setParameters(['1' => $min, 'max' => $max])
+            ->getResult();
+    }
+
     public function Orderbydql(): array
     {
         $em = $this->getEntityManager();
