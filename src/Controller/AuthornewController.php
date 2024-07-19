@@ -64,7 +64,7 @@ class AuthornewController extends AbstractController
         $author = new Author();
         $author->setUsername("mohamed");
         $author->setEmail("mohamed@esprit.tn");
-        $author->setNbBooks(7)+1;
+        $author->setNbBooks(7);
         $em->persist($author);
         $em->flush();
 

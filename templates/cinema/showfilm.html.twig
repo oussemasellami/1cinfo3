@@ -1,0 +1,25 @@
+<hr>
+<table border="3">
+    <tr>
+        <td>matfilm</td>
+        <td>nom</td>
+        <td>description</td>
+        <td>duree</td>
+        <td>cinema</td>
+    </tr>
+
+    {% for i in film  %}
+    <tr>
+        <td>{{i.matfilm}}</td>
+        <td>{{i.nom | upper}}</td>
+        <td>{{i.description}}</td>
+        <td>{{i.duree}}</td>
+        <td>{{i.cinema.nom}}</td>
+
+      
+ 
+
+     
+    </tr>
+    {% endfor %}
+</table>
